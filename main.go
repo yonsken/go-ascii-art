@@ -12,6 +12,8 @@ import (
 	"golang.org/x/term"
 )
 
+const approxFontHeightToWidthRatio = 0.5
+
 func main() {
 	if len(os.Args) != 2 {
 		log.Fatal("invalid number of command line arguments")
@@ -43,7 +45,9 @@ func main() {
 		srcBounds    = sourceImg.Bounds()
 		imageWidth   = srcBounds.Max.X - srcBounds.Min.X
 		imageHeight  = srcBounds.Max.Y - srcBounds.Min.Y
-		outputHeight = int(float64(imageHeight) * (float64(outputWidth) / float64(imageWidth)))
+		outputHeight = int(float64(imageHeight) *
+			(float64(outputWidth) / float64(imageWidth)) *
+			approxFontHeightToWidthRatio)
 		outputBounds = image.Rect(0, 0, outputWidth, outputHeight)
 		output       = image.NewGray(outputBounds)
 	)
